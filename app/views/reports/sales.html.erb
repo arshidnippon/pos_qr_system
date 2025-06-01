@@ -1,0 +1,21 @@
+<div class="mb-4">
+  <%= link_to "← Back to Dashboard", root_path,
+    class: "inline-block bg-gray-200 text-gray-800 hover:bg-gray-300 px-4 py-2 rounded text-sm" %>
+</div>
+
+<h1 class="text-2xl font-bold text-blue-700 mb-6">Sales Reports</h1>
+
+<div class="mb-10">
+  <h2 class="text-lg font-semibold mb-2">Daily Sales</h2>
+  <%= line_chart @daily_sales %>
+</div>
+
+<div class="mb-10">
+  <h2 class="text-lg font-semibold mb-2">Monthly Sales</h2>
+  <%= column_chart @monthly_sales %>
+</div>
+
+<div>
+  <h2 class="text-lg font-semibold mb-2">Yearly Sales</h2>
+  <%= column_chart @yearly_sales %>
+</div>

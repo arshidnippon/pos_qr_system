@@ -1,0 +1,25 @@
+<%= form_with(model: product, local: true, class: "space-y-6") do |form| %>
+  <div>
+    <%= form.label :name, class: "block text-sm font-medium text-gray-700" %>
+    <%= form.text_field :name, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:ring focus:ring-blue-200" %>
+  </div>
+
+  <div>
+    <%= form.label :sku, class: "block text-sm font-medium text-gray-700" %>
+    <%= form.text_field :sku, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:ring focus:ring-blue-200" %>
+  </div>
+
+  <div>
+    <%= form.label :quantity, class: "block text-sm font-medium text-gray-700" %>
+    <%= form.number_field :quantity, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:ring focus:ring-blue-200" %>
+  </div>
+
+  <div>
+    <%= form.label :expire_date, class: "block text-sm font-medium text-gray-700" %>
+    <%= form.date_field :expire_date, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:ring focus:ring-blue-200" %>
+  </div>
+
+  <div>
+    <%= form.submit "Save", class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+  </div>
+<% end %>

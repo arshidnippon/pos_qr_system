@@ -1,0 +1,6 @@
+<div class="text-center">
+  <h1 class="text-xl font-bold mb-4"><%= @product.name %> (SKU: <%= @product.sku %>)</h1>
+  <div class="inline-block border p-4">
+    <%= raw @qr.as_svg(module_size: 6) %>
+  </div>
+</div>

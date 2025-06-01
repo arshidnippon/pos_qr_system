@@ -1,0 +1,32 @@
+<div class="mb-4">
+  <%= link_to "← Back to Dashboard", root_path,
+    class: "inline-block bg-gray-200 text-gray-800 hover:bg-gray-300 px-4 py-2 rounded text-sm" %>
+</div>
+
+
+<%= form_with url: sales_path, method: :get, local: true, class: "flex flex-wrap items-end mb-6" do %>
+  <div class="mr-[10px]">
+    <label class="block text-sm font-medium text-gray-700">Product</label>
+    <%= select_tag :product_id,
+      options_from_collection_for_select(@products, :id, :name, params[:product_id]),
+      include_blank: "All",
+      class: "mt-1 block w-full px-3 py-2 border rounded" %>
+  </div>
+
+  <div class="mr-[10px]">
+    <label class="block text-sm font-medium text-gray-700">Start Date</label>
+    <%= date_field_tag :start_date, params[:start_date],
+      class: "mt-1 block w-full px-3 py-2 border rounded" %>
+  </div>
+
+  <div class="mr-[10px]">
+    <label class="block text-sm font-medium text-gray-700">End Date</label>
+    <%= date_field_tag :end_date, params[:end_date],
+      class: "mt-1 block w-full px-3 py-2 border rounded" %>
+  </div>
+
+  <div class="mr-[10px]">
+    <%= submit_tag "Filter",
+      class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 mt-6" %>
+  </div>
+<% end %>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Print QR Code</title>
+    <%= csrf_meta_tags %>
+    <style>
+      @media print {
+        body { margin: 0; }
+      }
+    </style>
+  </head>
+  <body onload="window.print()" class="flex items-center justify-center h-screen bg-white">
+    <%= yield %>
+  </body>
+</html>
