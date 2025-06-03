@@ -13,6 +13,15 @@
 
   <!-- Use flex layout to push footer to the bottom -->
   <body class="bg-gray-50 text-gray-900 font-sans min-h-screen flex flex-col">
+  <% if flash[:notice] %>
+  <script>
+    alert("<%= j flash[:notice] %>");
+  </script>
+<% elsif flash[:alert] %>
+  <script>
+    alert("<%= j flash[:alert] %>");
+  </script>
+<% end %>
 
     <!-- Full height content wrapper -->
     <div class="flex-1 flex flex-col">

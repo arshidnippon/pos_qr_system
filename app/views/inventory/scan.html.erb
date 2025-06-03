@@ -8,9 +8,14 @@
 <!-- QR Scanner -->
 <div id="qr-reader" class="mb-6 w-full max-w-md"></div>
 
-<%= form_with url: inventory_scan_path, method: :get, local: true do %>
+<%= form_with url: inventory_scan_path, method: :get, local: true, html: { id: "scan-form" } do %>
   <input type="hidden" name="sku" id="sku" />
 <% end %>
+<div class="mb-6">
+  <label class="block text-sm font-medium text-gray-700 mb-1">Scan from Image</label>
+  <input type="file" id="qr-file-input" accept="image/*"
+         class="block w-full border px-3 py-2 rounded text-sm" />
+</div>
 
 <!-- Flash Messages -->
 <% if flash[:notice] %>
@@ -28,7 +33,7 @@
 
     <%= form_with url: inventory_sell_path, method: :post, local: true do %>
       <%= hidden_field_tag :sku, @product.sku %>
-      <%= submit_tag "Mark as Sold", class: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded" %>
+      <%= submit_tag "Mark as Sold", class: "bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded" %>
     <% end %>
   </div>
 <% end %>
@@ -44,14 +49,46 @@
         { facingMode: "environment" },
         { fps: 10, qrbox: 250 },
         qrCodeMessage => {
-          document.getElementById("sku").value = qrCodeMessage;
-          document.querySelector("form[method='get']").submit();
-          scanner.stop();
+          // Extract SKU from the scanned text using regex
+          const match = qrCodeMessage.match(/SKU:\s*(\w+)/);
+          if (match && match[1]) {
+            document.getElementById("sku").value = match[1];
+            document.getElementById("scan-form").submit();
+          } else {
+            alert("Invalid QR code format. SKU not found.");
+          }
         },
-        error => {}
+        error => {
+          // Ignore scan errors
+        }
       );
     }
   }).catch(err => {
     alert("Camera access error: " + err);
+  });
+</script>
+
+<script>
+  const fileInput = document.getElementById("qr-file-input");
+
+  fileInput.addEventListener("change", event => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const qrCodeScanner = new Html5Qrcode("qr-reader");
+    
+    qrCodeScanner.scanFile(file, true)
+      .then(qrCodeMessage => {
+        const match = qrCodeMessage.match(/SKU:\s*(\w+)/);
+        if (match && match[1]) {
+          document.getElementById("sku").value = match[1];
+          document.getElementById("scan-form").submit();
+        } else {
+          alert("Invalid QR format. Could not extract SKU.");
+        }
+      })
+      .catch(err => {
+        alert("Failed to scan file: " + err);
+      });
   });
 </script>
