@@ -1,0 +1,23 @@
+FROM ruby:3.2.0
+
+# Node and Yarn are often required for Rails + Webpacker
+RUN apt-get update -qq && \
+    apt-get install -y build-essential libpq-dev nodejs postgresql-client
+
+# Set working directory
+WORKDIR /app
+
+# Copy Gemfiles
+COPY Gemfile Gemfile.lock ./
+
+# Install gems (with dev group)
+RUN bundle install
+
+# Copy app source
+COPY . .
+
+# Expose port
+EXPOSE 3000
+
+# Start server
+CMD ["rails", "server", "-b", "0.0.0.0"]
