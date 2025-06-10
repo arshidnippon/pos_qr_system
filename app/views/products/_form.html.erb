@@ -15,9 +15,18 @@
   </div>
 
   <div>
+    <%= form.label :initial_stock, "Initial Stock", class: "block text-sm font-medium text-gray-700" %>
+    <%= form.number_field :initial_stock, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:ring focus:ring-yellow-200" %>
+  </div>
+
+  <div>
     <%= form.label :expire_date, class: "block text-sm font-medium text-gray-700" %>
     <%= form.date_field :expire_date, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:ring focus:ring-blue-200" %>
   </div>
+  <div>
+  <%= form.label :alert_email, "Alert Email", class: "block text-sm font-medium text-gray-700" %>
+  <%= form.email_field :alert_email, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:ring focus:ring-blue-200" %>
+</div>
 
   <div>
     <%= form.submit "Save", class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>

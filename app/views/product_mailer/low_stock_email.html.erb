@@ -1,2 +1,4 @@
-<p><strong><%= @product.name %></strong> stock is running low.</p>
-<p>Only <%= @product.quantity %> units remaining.</p>
+<h2 style="color: #e53e3e;">⚠️ Low Stock Warning</h2>
+<p><strong><%= @product.name %></strong> stock is now below 50%.</p>
+<p>Remaining: <strong><%= @product.quantity %></strong> units.</p>
+<p>Please restock as soon as possible.</p>
