@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get "notifications/index"
+  get "profiles/show"
+  get "profiles/edit"
+  get "profiles/update"
   get "reports/sales"
   get "inventory/scan"
   resources :products
@@ -28,6 +32,8 @@ Rails.application.routes.draw do
   post 'inventory/sell', to: 'inventory#sell'
   get 'sales', to: 'sales#index'
   get 'reports/sales', to: 'reports#sales'
+  resource :profile, only: [:show, :edit, :update]
+  resources :notifications, only: [:index]
 
 
 end

@@ -1,45 +1,55 @@
-<div class="mb-4">
-  <%= link_to "← Back to Dashboard", root_path,
-    class: "inline-block bg-gray-200 text-gray-800 hover:bg-gray-300 px-4 py-2 rounded text-sm" %>
-</div>
-
-<h1 class="text-2xl font-bold text-blue-700 mb-6">Inventory Scanner</h1>
-
-<!-- QR Scanner -->
-<div id="qr-reader" class="mb-6 w-full max-w-md"></div>
-
-<%= form_with url: inventory_scan_path, method: :get, local: true, html: { id: "scan-form" } do %>
-  <input type="hidden" name="sku" id="sku" />
-<% end %>
-<div class="mb-6">
-  <label class="block text-sm font-medium text-gray-700 mb-1">Scan from Image</label>
-  <input type="file" id="qr-file-input" accept="image/*"
-         class="block w-full border px-3 py-2 rounded text-sm" />
-</div>
-
-<!-- Flash Messages -->
-<% if flash[:notice] %>
-  <div class="bg-green-100 text-green-800 p-3 mb-4 rounded"><%= flash[:notice] %></div>
-<% elsif flash[:alert] %>
-  <div class="bg-red-100 text-red-800 p-3 mb-4 rounded"><%= flash[:alert] %></div>
-<% end %>
-
-<!-- Product Display -->
-<% if @product %>
-  <div class="bg-white p-4 rounded shadow-md w-full max-w-md">
-    <h2 class="text-lg font-bold text-gray-800 mb-2"><%= @product.name %></h2>
-    <p class="text-sm text-gray-600 mb-4">SKU: <%= @product.sku %></p>
-    <p class="text-sm text-gray-600 mb-4">Quantity: <%= @product.quantity %></p>
-
-    <%= form_with url: inventory_sell_path, method: :post, local: true do %>
-      <%= hidden_field_tag :sku, @product.sku %>
-      <%= submit_tag "Mark as Sold", class: "bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded" %>
-    <% end %>
+<div class="container py-4">
+  <!-- Back Link -->
+  <div class="mb-4">
+    <%= link_to "← Back to Dashboard", root_path,
+      class: "btn btn-light btn-sm" %>
   </div>
-<% end %>
 
-<!-- QR Scanner JS -->
+  <!-- Header -->
+  <h1 class="h4 text-primary fw-bold mb-4">Inventory Scanner</h1>
+
+  <!-- QR Reader -->
+  <div id="qr-reader" class="mb-4 mx-auto" style="max-width: 400px;"></div>
+
+  <!-- Hidden Scan Form -->
+  <%= form_with url: inventory_scan_path, method: :get, local: true, html: { id: "scan-form" } do %>
+    <%= hidden_field_tag :sku, "", id: "sku" %>
+  <% end %>
+
+  <!-- Scan from Image -->
+  <div class="mb-4">
+    <label for="qr-file-input" class="form-label">Scan from Image</label>
+    <input type="file" id="qr-file-input" accept="image/*" class="form-control form-control-sm" />
+  </div>
+
+  <!-- Flash Messages -->
+  <% if flash[:notice] %>
+    <div class="alert alert-success"><%= flash[:notice] %></div>
+  <% elsif flash[:alert] %>
+    <div class="alert alert-danger"><%= flash[:alert] %></div>
+  <% end %>
+
+  <!-- Product Info -->
+  <% if @product %>
+    <div class="card shadow-sm mx-auto" style="max-width: 400px;">
+      <div class="card-body">
+        <h5 class="card-title mb-2"><%= @product.name %></h5>
+        <p class="card-text small text-muted mb-1">SKU: <%= @product.sku %></p>
+        <p class="card-text small text-muted mb-3">Quantity: <%= @product.quantity %></p>
+
+        <%= form_with url: inventory_sell_path, method: :post, local: true do %>
+          <%= hidden_field_tag :sku, @product.sku %>
+          <%= submit_tag "Mark as Sold", class: "btn btn-primary w-100" %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<!-- QR Scanner Library -->
 <script src="https://unpkg.com/html5-qrcode"></script>
+
+<!-- Live QR Scanner -->
 <script>
   const scanner = new Html5Qrcode("qr-reader");
 
@@ -49,7 +59,6 @@
         { facingMode: "environment" },
         { fps: 10, qrbox: 250 },
         qrCodeMessage => {
-          // Extract SKU from the scanned text using regex
           const match = qrCodeMessage.match(/SKU:\s*(\w+)/);
           if (match && match[1]) {
             document.getElementById("sku").value = match[1];
@@ -59,7 +68,7 @@
           }
         },
         error => {
-          // Ignore scan errors
+          // silent
         }
       );
     }
@@ -68,6 +77,7 @@
   });
 </script>
 
+<!-- Scan from Uploaded Image -->
 <script>
   const fileInput = document.getElementById("qr-file-input");
 
@@ -76,7 +86,7 @@
     if (!file) return;
 
     const qrCodeScanner = new Html5Qrcode("qr-reader");
-    
+
     qrCodeScanner.scanFile(file, true)
       .then(qrCodeMessage => {
         const match = qrCodeMessage.match(/SKU:\s*(\w+)/);

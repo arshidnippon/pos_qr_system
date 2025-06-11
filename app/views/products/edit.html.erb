@@ -1,14 +1,18 @@
-<% content_for :title, "Editing product" %>
+<% content_for :title, "Editing Product" %>
 
-<div class="md:w-2/3 w-full">
-  <h1 class="font-bold text-4xl mb-6">Editing Product</h1>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8">
+      <h1 class="mb-4 fw-bold h3 text-primary">Editing Product</h1>
 
-  <%= render "form", product: @product %>
+      <%= render "form", product: @product %>
 
-  <div class="mt-4 space-x-2">
-    <%= link_to "Show this product", @product,
-        class: "inline-block text-center rounded-md px-4 py-2 bg-gray-100 hover:bg-gray-200 font-medium" %>
-    <%= link_to "Back to products", products_path,
-        class: "inline-block text-center rounded-md px-4 py-2 bg-gray-100 hover:bg-gray-200 font-medium" %>
+      <div class="mt-4 d-flex gap-2">
+        <%= link_to "Show this product", @product,
+            class: "btn btn-outline-secondary" %>
+        <%= link_to "Back to products", products_path,
+            class: "btn btn-outline-secondary" %>
+      </div>
+    </div>
   </div>
 </div>

@@ -1,34 +1,35 @@
-<%= form_with(model: product, local: true, class: "space-y-6") do |form| %>
-  <div>
-    <%= form.label :name, class: "block text-sm font-medium text-gray-700" %>
-    <%= form.text_field :name, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:ring focus:ring-blue-200" %>
+<%= form_with(model: product, local: true, html: { class: "needs-validation" }) do |form| %>
+  <div class="mb-3">
+    <%= form.label :name, class: "form-label" %>
+    <%= form.text_field :name, class: "form-control", required: true %>
   </div>
 
-  <div>
-    <%= form.label :sku, class: "block text-sm font-medium text-gray-700" %>
-    <%= form.text_field :sku, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:ring focus:ring-blue-200" %>
+  <div class="mb-3">
+    <%= form.label :sku, class: "form-label" %>
+    <%= form.text_field :sku, class: "form-control", required: true %>
   </div>
 
-  <div>
-    <%= form.label :quantity, class: "block text-sm font-medium text-gray-700" %>
-    <%= form.number_field :quantity, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:ring focus:ring-blue-200" %>
+  <div class="mb-3">
+    <%= form.label :quantity, class: "form-label" %>
+    <%= form.number_field :quantity, class: "form-control", required: true %>
   </div>
 
-  <div>
-    <%= form.label :initial_stock, "Initial Stock", class: "block text-sm font-medium text-gray-700" %>
-    <%= form.number_field :initial_stock, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:ring focus:ring-yellow-200" %>
+  <div class="mb-3">
+    <%= form.label :initial_stock, "Initial Stock", class: "form-label" %>
+    <%= form.number_field :initial_stock, class: "form-control", required: true %>
   </div>
 
-  <div>
-    <%= form.label :expire_date, class: "block text-sm font-medium text-gray-700" %>
-    <%= form.date_field :expire_date, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:ring focus:ring-blue-200" %>
+  <div class="mb-3">
+    <%= form.label :expire_date, class: "form-label" %>
+    <%= form.date_field :expire_date, class: "form-control" %>
   </div>
-  <div>
-  <%= form.label :alert_email, "Alert Email", class: "block text-sm font-medium text-gray-700" %>
-  <%= form.email_field :alert_email, class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded shadow-sm focus:ring focus:ring-blue-200" %>
-</div>
 
-  <div>
-    <%= form.submit "Save", class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+  <div class="mb-3">
+    <%= form.label :alert_email, "Alert Email", class: "form-label" %>
+    <%= form.email_field :alert_email, class: "form-control", required: true %>
+  </div>
+
+  <div class="d-grid">
+    <%= form.submit "Save", class: "btn btn-primary" %>
   </div>
 <% end %>

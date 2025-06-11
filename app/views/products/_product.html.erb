@@ -1,18 +1,21 @@
-<div id="<%= dom_id product %>" class="w-full sm:w-auto my-5 space-y-5">
-  <div>
-    <strong class="block font-medium mb-1">Name:</strong>
-    <%= product.name %>
+<div id="<%= dom_id product %>" class="my-4 p-4 border rounded bg-light">
+  <div class="mb-2">
+    <strong class="d-block text-muted small">Name:</strong>
+    <span class="fs-6"><%= product.name %></span>
   </div>
-  <div>
-    <strong class="block font-medium mb-1">Sku:</strong>
-    <%= product.sku %>
+
+  <div class="mb-2">
+    <strong class="d-block text-muted small">SKU:</strong>
+    <span class="fs-6"><%= product.sku %></span>
   </div>
-  <div>
-    <strong class="block font-medium mb-1">Quantity:</strong>
-    <%= product.quantity %>
+
+  <div class="mb-2">
+    <strong class="d-block text-muted small">Quantity:</strong>
+    <span class="fs-6"><%= product.quantity %></span>
   </div>
+
   <div>
-    <strong class="block font-medium mb-1">Expire date:</strong>
-    <%= product.expire_date %>
+    <strong class="d-block text-muted small">Expire Date:</strong>
+    <span class="fs-6"><%= product.expire_date %></span>
   </div>
 </div>

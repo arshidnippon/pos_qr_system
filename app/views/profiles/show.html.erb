@@ -1,0 +1,20 @@
+<h1 class="text-2xl font-bold mb-4">My Profile</h1>
+
+<div class="mb-4">
+  <strong>Name:</strong> <%= @user.name || "N/A" %>
+</div>
+
+<div class="mb-4">
+  <strong>Email:</strong> <%= @user.email %>
+</div>
+
+<div class="mb-4">
+  <% if @user.avatar.attached? %>
+    <%= image_tag @user.avatar.variant(resize_to_limit: [150, 150]), class: "rounded-circle" %>
+  <% else %>
+    <p>No avatar uploaded.</p>
+  <% end %>
+</div>
+
+
+<%= link_to "Edit Profile", edit_profile_path, class: "btn btn-primary" %>

@@ -1,19 +1,17 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: %i[ show edit update destroy ]
+  before_action :set_product, only: %i[show edit update destroy download_qr print_qr]
 
-  # GET /products or /products.json
+  # GET /products
   def index
     @products = Product.all
   end
 
-  # GET /products/1 or /products/1.json
+  # GET /products/1
   def show
-    @product = Product.find(params[:id])
     require 'rqrcode'
     qr_data = "Name: #{@product.name}\nSKU: #{@product.sku}\nQty: #{@product.quantity}"
     @qr = RQRCode::QRCode.new(qr_data)
   end
-  
 
   # GET /products/new
   def new
@@ -21,10 +19,9 @@ class ProductsController < ApplicationController
   end
 
   # GET /products/1/edit
-  def edit
-  end
+  def edit; end
 
-  # POST /products or /products.json
+  # POST /products
   def create
     @product = Product.new(product_params)
 
@@ -39,7 +36,7 @@ class ProductsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /products/1 or /products/1.json
+  # PATCH/PUT /products/1
   def update
     respond_to do |format|
       if @product.update(product_params)
@@ -52,7 +49,7 @@ class ProductsController < ApplicationController
     end
   end
 
-  # DELETE /products/1 or /products/1.json
+  # DELETE /products/1
   def destroy
     @product.destroy!
 
@@ -62,12 +59,13 @@ class ProductsController < ApplicationController
     end
   end
 
+  # GET /products/:id/download_qr
   def download_qr
-    @product = Product.find(params[:id])
+    require 'rqrcode'
+
     qr_data = "Name: #{@product.name}\nSKU: #{@product.sku}\nQty: #{@product.quantity}"
     qr = RQRCode::QRCode.new(qr_data)
 
-  
     png = qr.as_png(
       resize_gte_to: false,
       resize_exactly_to: false,
@@ -78,31 +76,32 @@ class ProductsController < ApplicationController
       module_px_size: 6,
       file: nil # return as string
     )
-  
+
     send_data png.to_s,
               type: 'image/png',
               disposition: 'attachment',
               filename: "#{@product.name.parameterize}-qr.png"
   end
-  
+
+  # GET /products/:id/print_qr
   def print_qr
-    @product = Product.find(params[:id])
     require 'rqrcode'
+
     qr_data = "Name: #{@product.name}\nSKU: #{@product.sku}\nQty: #{@product.quantity}"
     @qr = RQRCode::QRCode.new(qr_data)
+
     render layout: "print"
   end
-  
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_product
-      @product = Product.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def product_params
-      params.require(:product).permit(:name, :sku, :quantity, :expire_date, :initial_stock, :alert_email)
-    end
-    
+  def set_product
+    @product = Product.find(params[:id])
+  end
+
+  def product_params
+    params.require(:product).permit(:name, :sku, :quantity, :expire_date, :initial_stock, :alert_email)
+  end
+ 
+  
 end

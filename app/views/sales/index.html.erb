@@ -1,65 +1,66 @@
-<!-- Back Button -->
-<div class="mb-4">
-  <%= link_to "← Back to Dashboard", root_path,
-    class: "inline-block bg-gray-200 text-gray-800 hover:bg-gray-300 px-4 py-2 rounded text-sm" %>
-</div>
-
-<!-- Page Title -->
-<h1 class="text-2xl font-bold text-blue-700 mb-6">Sales Report</h1>
-
-<!-- Filter Form -->
-<%= form_with url: sales_path, method: :get, local: true, class: "flex flex-wrap items-end mb-6" do %>
-  <div class="mr-[10px]">
-    <label class="block text-sm font-medium text-gray-700">Product</label>
-    <%= select_tag :product_id,
-      options_from_collection_for_select(@products, :id, :name, params[:product_id]),
-      include_blank: "All",
-      class: "mt-1 block w-full px-3 py-2 border rounded" %>
+<div class="container my-5">
+  <!-- Back Button -->
+  <div class="mb-3">
+    <%= link_to "← Back to Dashboard", root_path, class: "btn btn-outline-secondary btn-sm" %>
   </div>
 
-  <div class="mr-[10px]">
-    <label class="block text-sm font-medium text-gray-700">Start Date</label>
-    <%= date_field_tag :start_date, params[:start_date],
-      class: "mt-1 block w-full px-3 py-2 border rounded" %>
+  <!-- Page Title -->
+  <h1 class="h4 fw-bold text-primary mb-4">Sales Report</h1>
+
+  <!-- Filter Form -->
+  <%= form_with url: sales_path, method: :get, local: true, class: "row gy-2 gx-3 align-items-end mb-4" do %>
+    <div class="col-sm-4 col-md-3">
+      <label class="form-label">Product</label>
+      <%= select_tag :product_id,
+        options_from_collection_for_select(@products, :id, :name, params[:product_id]),
+        include_blank: "All",
+        class: "form-select" %>
+    </div>
+
+    <div class="col-sm-4 col-md-3">
+      <label class="form-label">Start Date</label>
+      <%= date_field_tag :start_date, params[:start_date], class: "form-control" %>
+    </div>
+
+    <div class="col-sm-4 col-md-3">
+      <label class="form-label">End Date</label>
+      <%= date_field_tag :end_date, params[:end_date], class: "form-control" %>
+    </div>
+
+    <div class="col-auto">
+      <%= submit_tag "Filter", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+
+  <!-- CSV Download -->
+  <div class="mb-3">
+    <%= link_to "⬇ Download CSV",
+      sales_path(request.query_parameters.merge(format: :csv)),
+      class: "btn btn-success btn-sm" %>
   </div>
 
-  <div class="mr-[10px]">
-    <label class="block text-sm font-medium text-gray-700">End Date</label>
-    <%= date_field_tag :end_date, params[:end_date],
-      class: "mt-1 block w-full px-3 py-2 border rounded" %>
-  </div>
-
-  <div class="mr-[10px]">
-    <%= submit_tag "Filter",
-      class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 mt-6" %>
-  </div>
-<% end %>
-
-<!-- CSV Download Button -->
-<%= link_to "⬇ Download CSV",
-  sales_path(request.query_parameters.merge(format: :csv)),
-  class: "inline-block bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 mb-6" %>
-
-<!-- Sales Table -->
-<% if @sales.any? %>
-  <table class="min-w-full bg-white border border-gray-200 rounded shadow-sm">
-    <thead class="bg-gray-100">
-      <tr>
-        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700 border-b">Date</th>
-        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700 border-b">Product</th>
-        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700 border-b">Quantity</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @sales.each do |sale| %>
-        <tr class="border-t hover:bg-gray-50">
-          <td class="px-4 py-2 text-sm text-gray-800"><%= sale.created_at.strftime("%Y-%m-%d %H:%M") %></td>
-          <td class="px-4 py-2 text-sm text-gray-800"><%= sale.product.name %></td>
-          <td class="px-4 py-2 text-sm text-gray-800"><%= sale.quantity %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-<% else %>
-  <p class="text-gray-500 mt-4">No sales records found for the selected filters.</p>
-<% end %>
+  <!-- Sales Table -->
+  <% if @sales.any? %>
+    <div class="table-responsive shadow-sm border rounded">
+      <table class="table table-hover table-bordered align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th class="text-nowrap">Date</th>
+            <th class="text-nowrap">Product</th>
+            <th class="text-nowrap">Quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @sales.each do |sale| %>
+            <tr>
+              <td><%= sale.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+              <td><%= sale.product.name %></td>
+              <td><%= sale.quantity %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p class="text-muted mt-3">No sales records found for the selected filters.</p>
+  <% end %>

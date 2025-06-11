@@ -57,7 +57,9 @@ group :test do
 end
 
 gem "devise", "~> 4.9"
-gem "tailwindcss-rails"
+# gem "tailwindcss-rails"
+gem 'bootstrap', '~> 5.3.0'
+gem "sassc-rails"
 gem 'rqrcode'
 gem 'chunky_png'
 gem 'groupdate'

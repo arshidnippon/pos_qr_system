@@ -1,35 +1,55 @@
-<h1 class="text-2xl font-bold text-blue-700 mb-6">Dashboard</h1>
+<!-- app/views/dashboard/index.html.erb -->
+<div class="py-5 px-3" style="background-image: url('<%= asset_path("pos_background.jpg") %>'); background-size: cover; background-position: center; min-height: 100vh;">
+  <div class="container">
 
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-  <!-- Card: Products -->
-  <div class="bg-white p-6 shadow rounded-lg">
-    <h2 class="text-lg font-semibold text-gray-800 mb-2">Products</h2>
-    <p class="text-sm text-gray-500 mb-4">Manage all your products, add new items, and generate QR codes.</p>
-    <div class="space-x-2">
-      <%= link_to "View Products", products_path, class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 text-sm" %>
-      <%= link_to "Add Product", new_product_path, class: "bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 text-sm" %>
+    <!-- Page Header -->
+    <h1 class="mb-4 fw-bold text-primary">Dashboard</h1>
+
+    <div class="row g-4">
+      <!-- Card: Products -->
+      <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+          <div class="card-body">
+            <h5 class="card-title text-dark fw-semibold">Products</h5>
+            <p class="card-text text-muted small">Manage all your products, add new items, and generate QR codes.</p>
+            <div class="d-flex gap-2">
+              <%= link_to "View Products", products_path, class: "btn btn-sm btn-primary" %>
+              <%= link_to "Add Product", new_product_path, class: "btn btn-sm btn-success" %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card: Inventory -->
+      <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+          <div class="card-body">
+            <h5 class="card-title text-dark fw-semibold">Inventory</h5>
+            <p class="card-text text-muted small">Scan QR codes to lookup and update product quantities in real time.</p>
+            <% if defined?(inventory_scan_path) %>
+              <%= link_to "Scan Inventory", inventory_scan_path, class: "btn btn-sm btn-success" %>
+            <% else %>
+              <a href="#" class="btn btn-sm btn-secondary disabled">Scan Inventory (Route Missing)</a>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card: Reports -->
+      <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+          <div class="card-body">
+            <h5 class="card-title text-dark fw-semibold">Reports</h5>
+            <p class="card-text text-muted small">View daily, monthly, and yearly sales reports.</p>
+            <% if defined?(sales_path) %>
+              <%= link_to "View Sales", sales_path, class: "btn btn-sm btn-primary" %>
+            <% else %>
+              <a href="#" class="btn btn-sm btn-secondary disabled">View Sales (Route Missing)</a>
+            <% end %>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-
-  <!-- Card: Inventory QR Scanner -->
-  <div class="bg-white p-6 shadow rounded-lg">
-    <h2 class="text-lg font-semibold text-gray-800 mb-2">Inventory</h2>
-    <p class="text-sm text-gray-500 mb-4">Scan QR codes to lookup and update product quantities in real time.</p>
-    <% if defined?(inventory_scan_path) %>
-      <%= link_to "Scan Inventory", inventory_scan_path, class: "bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 text-sm" %>
-    <% else %>
-      <a href="#" class="bg-purple-300 text-white px-4 py-2 rounded text-sm cursor-not-allowed">Scan Inventory (Route Missing)</a>
-    <% end %>
-  </div>
-
-  <!-- Card: Reports -->
-  <div class="bg-white p-6 shadow rounded-lg">
-    <h2 class="text-lg font-semibold text-gray-800 mb-2">Reports</h2>
-    <p class="text-sm text-gray-500 mb-4">View daily, monthly, and yearly sales reports.</p>
-    <% if defined?(sales_path) %>
-      <%= link_to "View Sales", sales_path, class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 text-sm" %>
-    <% else %>
-      <a href="#" class="bg-indigo-300 text-white px-4 py-2 rounded text-sm cursor-not-allowed">View Sales (Route Missing)</a>
-    <% end %>
+    
   </div>
 </div>
