@@ -1,8 +1,7 @@
 <div class="container py-4">
   <!-- Back Link -->
   <div class="mb-4">
-    <%= link_to "← Back to Dashboard", root_path,
-      class: "btn btn-light btn-sm" %>
+    <%= link_to "← Back to Dashboard", root_path, class: "btn btn-light btn-sm" %>
   </div>
 
   <!-- Header -->
@@ -29,6 +28,11 @@
     <div class="alert alert-danger"><%= flash[:alert] %></div>
   <% end %>
 
+  <!-- Debug Output -->
+  <% if params[:sku].present? %>
+    <div class="alert alert-info">Scanned SKU: <%= params[:sku] %></div>
+  <% end %>
+
   <!-- Product Info -->
   <% if @product %>
     <div class="card shadow-sm mx-auto" style="max-width: 400px;">
@@ -43,6 +47,8 @@
         <% end %>
       </div>
     </div>
+  <% elsif params[:sku].present? %>
+    <div class="alert alert-warning mt-4">⚠️ No product found with SKU: <%= params[:sku] %></div>
   <% end %>
 </div>
 
@@ -59,8 +65,10 @@
         { facingMode: "environment" },
         { fps: 10, qrbox: 250 },
         qrCodeMessage => {
+          console.log("Scanned from camera:", qrCodeMessage);
           const match = qrCodeMessage.match(/sku[:\s]*([\w-]+)/i);
           if (match && match[1]) {
+            console.log("Extracted SKU:", match[1]);
             document.getElementById("sku").value = match[1];
             document.getElementById("scan-form").submit();
           } else {
@@ -68,7 +76,7 @@
           }
         },
         error => {
-          // silent
+          // Silent scan error
         }
       );
     }
@@ -89,8 +97,10 @@
 
     qrCodeScanner.scanFile(file, true)
       .then(qrCodeMessage => {
-        const match = qrCodeMessage.match(/SKU:\s*(\w+)/);
+        console.log("Scanned from file:", qrCodeMessage);
+        const match = qrCodeMessage.match(/sku[:\s]*([\w-]+)/i);
         if (match && match[1]) {
+          console.log("Extracted SKU:", match[1]);
           document.getElementById("sku").value = match[1];
           document.getElementById("scan-form").submit();
         } else {
