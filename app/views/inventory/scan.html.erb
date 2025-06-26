@@ -59,7 +59,7 @@
         { facingMode: "environment" },
         { fps: 10, qrbox: 250 },
         qrCodeMessage => {
-          const match = qrCodeMessage.match(/SKU:\s*(\w+)/);
+          const match = qrCodeMessage.match(/sku[:\s]*([\w-]+)/i);
           if (match && match[1]) {
             document.getElementById("sku").value = match[1];
             document.getElementById("scan-form").submit();
