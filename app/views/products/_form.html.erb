@@ -1,7 +1,22 @@
+<% grocery_product_names = [
+  "Beras Super 5kg", "Minyak Masak 1L", "Gula Pasir", "Garam Halus", "Telur Ayam 10s",
+  "Susu Pekat Manis", "Susu Cair", "Sardin Tin", "Mee Kuning", "Bihun Cap Rambutan",
+  "Maggi Kari 5-pack", "Sos Cili", "Sos Tomato", "Kicap Manis", "Kicap Masin",
+  "Teh Boh 25s", "Nescafe 3-in-1", "Milo 1kg", "Air Mineral 1.5L", "Roti Gardenia",
+  "Buttercup Margarine", "Keju Cheddar", "Ayam Segar 1kg", "Ikan Kembung", "Daging Lembu",
+  "Sayur Sawi", "Kangkung", "Kobis Bulat", "Tomato", "Timun",
+  "Bawang Merah", "Bawang Putih", "Cili Kering", "Serbuk Kari Daging", "Serbuk Kunyit",
+  "Rempah Kurma", "Daun Kari", "Santan Kotak", "Tepung Gandum", "Tepung Jagung",
+  "Biskut Marie", "Keropok Lekor", "Kuih Bahulu", "Aiskrim Paddle Pop", "Agar-Agar Strip",
+  "Air Soya", "Minuman Yogurt", "Cuka Masakan", "Asam Jawa", "Serbuk Coklat"
+] %>
+
 <%= form_with(model: product, local: true, html: { class: "needs-validation" }) do |form| %>
   <div class="mb-3">
     <%= form.label :name, class: "form-label" %>
-    <%= form.text_field :name, class: "form-control", required: true %>
+    <%= form.select :name, options_for_select(grocery_product_names, selected: product.name), 
+      { prompt: "Select a product" }, 
+      class: "form-select", required: true %>
   </div>
 
   <div class="mb-3">

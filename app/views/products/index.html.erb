@@ -31,14 +31,17 @@
             <td><%= product.initial_stock %></td>
             <td><%= product.expire_date %></td>
             <td>
-              <% if percent_left <= 20 %>
-                <span class="badge bg-danger">Low Stock</span>
-              <% elsif percent_left <= 50 %>
-                <span class="badge bg-warning text-dark">Low Stock</span>
-              <% else %>
-                <span class="badge bg-success">In Stock</span>
-              <% end %>
-            </td>
+            <% if percent_left == 0 %>
+              <span class="badge bg-danger">Out of Stock</span>
+            <% elsif percent_left <= 20 %>
+              <span class="badge bg-danger">Low Stock</span>
+            <% elsif percent_left <= 50 %>
+              <span class="badge bg-warning text-dark">Low Stock</span>
+            <% else %>
+              <span class="badge bg-success">In Stock</span>
+            <% end %>
+          </td>
+          
             <td>
               <%= link_to "View", product_path(product), class: "btn btn-outline-primary btn-sm me-1" %>
               <%= link_to "Edit", edit_product_path(product), class: "btn btn-outline-warning btn-sm me-1" %>
